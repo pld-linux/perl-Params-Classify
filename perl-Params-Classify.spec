@@ -6,7 +6,7 @@
 %define		pnam	Classify
 %include	/usr/lib/rpm/macros.perl
 Summary:	Params::Classify - argument type classification
-#Summary(pl.UTF-8):	
+Summary(pl.UTF-8):	Params::Classify - klasyfikacja typu argumentu
 Name:		perl-Params-Classify
 Version:	0.013
 Release:	1
@@ -15,44 +15,40 @@ License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-module/Params/%{pdir}-%{pnam}-%{version}.tar.gz
 # Source0-md5:	63d24fbec775472ada49d16bce4a9b1f
-# generic URL, check or change before uncommenting
-#URL:		http://search.cpan.org/dist/Params-Classify/
+URL:		http://search.cpan.org/dist/Params-Classify/
+BuildRequires:	perl-ExtUtils-ParseXS >= 2.2006
 BuildRequires:	perl-Module-Build
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
 %if %{with tests}
+BuildRequires:	perl-Scalar-List-Utils >= 1.01
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-This module provides various type-testing functions.  These are
+This module provides various type-testing functions. These are
 intended for functions that, unlike most Perl code, care what type of
-data they are operating on.  For example, some functions wish to
+data they are operating on. For example, some functions wish to
 behave differently depending on the type of their arguments (like
 overloaded functions in C++).
 
-There are two flavours of function in this module.  Functions of the
-first flavour only provide type classification, to allow code to
-discriminate between argument types.  Functions of the second flavour
-package up the most common type of type discrimination: checking that
-an argument is of an expected type.  The functions come in matched
-pairs, of the two flavours, and so the type enforcement functions
-handle only the simplest requirements for arguments of the types
-handled by the classification functions.  Enforcement of more complex
-types may, of course, be built using the classification functions, or
-it may be more convenient to use a module designed for the more
-complex job, such as Params::Validate.
-
-# %description -l pl.UTF-8
-# TODO
+%description -l pl.UTF-8
+Ten moduł udostępnia różne funkcje do sprawdzania typów. Mają być
+przydatne dla funkcji, które - w przeciwieństwie do większości kodu
+perlowego - zwracają uwagę na typ danych, na których operują; np.
+dla funkcji, które zachowują się różnie w zależności od typu
+argumentów (jak przeciążone funkcje w C++).
 
 %prep
 %setup -q -n %{pdir}-%{pnam}-%{version}
 
 %build
 %{__perl} Build.PL \
-	destdir=$RPM_BUILD_ROOT \
-	installdirs=vendor
+	installdirs=vendor \
+	--config cc="%{__cc}" \
+	--config ld="%{__cc}" \
+	--config optimize="%{rpmcflags}"
+
 ./Build
 
 %{?with_tests:./Build test}
@@ -60,7 +56,8 @@ complex job, such as Params::Validate.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-./Build install
+./Build install \
+	destdir=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -68,8 +65,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc Changes README
-%{perl_vendorarch}/Params/*.pm
+%{perl_vendorarch}/Params/Classify.pm
 %dir %{perl_vendorarch}/auto/Params/Classify
-%{perl_vendorarch}/auto/Params/Classify/*.bs
-%attr(755,root,root) %{perl_vendorarch}/auto/Params/Classify/*.so
-%{_mandir}/man3/*
+%{perl_vendorarch}/auto/Params/Classify/Classify.bs
+%attr(755,root,root) %{perl_vendorarch}/auto/Params/Classify/Classify.so
+%{_mandir}/man3/Params::Classify.3pm*
