@@ -67,6 +67,5 @@ rm -rf $RPM_BUILD_ROOT
 %doc Changes README
 %{perl_vendorarch}/Params/Classify.pm
 %dir %{perl_vendorarch}/auto/Params/Classify
-%{perl_vendorarch}/auto/Params/Classify/Classify.bs
 %attr(755,root,root) %{perl_vendorarch}/auto/Params/Classify/Classify.so
 %{_mandir}/man3/Params::Classify.3pm*
