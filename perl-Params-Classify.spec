@@ -9,12 +9,13 @@ Summary:	Params::Classify - argument type classification
 Summary(pl.UTF-8):	Params::Classify - klasyfikacja typu argumentu
 Name:		perl-Params-Classify
 Version:	0.013
-Release:	8
+Release:	9
 # same as perl
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-module/Params/%{pdir}-%{pnam}-%{version}.tar.gz
 # Source0-md5:	63d24fbec775472ada49d16bce4a9b1f
+Patch0:		op_sibling_fixes.patch
 URL:		http://search.cpan.org/dist/Params-Classify/
 BuildRequires:	perl-ExtUtils-ParseXS >= 2.2006
 BuildRequires:	perl-Module-Build
@@ -41,6 +42,7 @@ argumentów (jak przeciążone funkcje w C++).
 
 %prep
 %setup -q -n %{pdir}-%{pnam}-%{version}
+%patch0 -p1
 
 %build
 %{__perl} Build.PL \
