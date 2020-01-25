@@ -4,7 +4,6 @@
 #
 %define		pdir	Params
 %define		pnam	Classify
-%include	/usr/lib/rpm/macros.perl
 Summary:	Params::Classify - argument type classification
 Summary(pl.UTF-8):	Params::Classify - klasyfikacja typu argumentu
 Name:		perl-Params-Classify
