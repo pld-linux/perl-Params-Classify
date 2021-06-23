@@ -14,13 +14,15 @@ License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-module/Params/%{pdir}-%{pnam}-%{version}.tar.gz
 # Source0-md5:	3c3367d759ed5bd6fe86c1f35e9b51ed
-URL:		http://search.cpan.org/dist/Params-Classify/
+URL:		https://metacpan.org/dist/Params-Classify
 BuildRequires:	perl-ExtUtils-ParseXS >= 2.2006
-BuildRequires:	perl-Module-Build
+BuildRequires:	perl-Module-Build >= 0.33
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
+BuildRequires:	rpmbuild(macros) >= 1.745
 %if %{with tests}
 BuildRequires:	perl-Scalar-List-Utils >= 1.01
+BuildRequires:	perl-Test-Simple
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -57,6 +59,8 @@ rm -rf $RPM_BUILD_ROOT
 
 ./Build install \
 	destdir=$RPM_BUILD_ROOT
+
+%{__rm} $RPM_BUILD_ROOT%{perl_vendorarch}/auto/Params/Classify/Classify.bs
 
 %clean
 rm -rf $RPM_BUILD_ROOT
